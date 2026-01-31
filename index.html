@@ -429,7 +429,9 @@
             .then(data => {
                 if(data.status === 'success') {
                     // AQUÍ GENERAMOS EL LINK DE SEGUIMIENTO REAL PARA EL USUARIO
-                    const linkSeguimiento = window.location.href.split('?')[0] + '?id=' + data.idPedido;
+                    // Quitamos el '#' y el '?' para tener una dirección limpia
+                    const baseUrl = window.location.href.split('#')[0].split('?')[0];
+                    const linkSeguimiento = baseUrl + '?id=' + data.idPedido;
                     
                     alert('¡Pedido Recibido! 🍊\n\nGuarda este link para ver el estado:\n' + linkSeguimiento);
                     
@@ -445,3 +447,4 @@
     </script>
 </body>
 </html>
+
