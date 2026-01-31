@@ -120,23 +120,28 @@
         .form-group label { display: block; margin-bottom: 5px; }
         .form-group input { width: 100%; padding: 8px; box-sizing: border-box; }
 
-        /* --- NUEVO: ESTILOS RASTREO --- */
-        <section id="tracking-section">
-        <div class="status-card">
-            <h2>📦 Rastrea tu Pedido</h2>
-            <p>Ingresa el código de tu pedido para ver el estado.</p>
-            
-            <div style="display: flex; gap: 10px; justify-content: center; margin-bottom: 20px;">
-                <input type="text" id="tracking-id-input" placeholder="Ej: a1b2c3d4" style="padding: 10px; width: 60%;">
-                <button class="btn-add" onclick="buscarPedidoManual()" style="width: auto;">Buscar 🔍</button>
-            </div>
+        /* --- ESTILOS RASTREO --- */
+        #tracking-section { display: none; text-align: center; padding: 50px 20px; }
+        .status-card {
+            background: white; padding: 30px; border-radius: 15px;
+            box-shadow: var(--shadow); max-width: 600px; margin: 0 auto;
+        }
+        .status-badge {
+            font-size: 1.5rem; font-weight: bold; padding: 10px 20px;
+            border-radius: 30px; display: inline-block; margin: 20px 0;
+            background: var(--light); color: var(--dark);
+        }
+        .status-Recibido { background: #E3F2FD; color: #1976D2; }
+        .status-En { background: #FFF3E0; color: #F57C00; } /* En Preparación */
+        .status-Listo { background: #E8F5E9; color: #388E3C; }
+        .status-Entregado { background: #4CAF50; color: white; }
+        
+        .ticket-img { max-width: 100%; border-radius: 10px; margin-top: 20px; border: 2px dashed #ccc; }
+        .main-content { transition: opacity 0.3s; }
 
-            <div id="tracking-result"></div>
-            
-            <br>
-            <a href="index.html" class="btn-add" style="text-decoration: none; width: auto; display: inline-block; background-color: #666;">⬅ Volver al Inicio</a>
-        </div>
-    </section>
+        .loader { text-align: center; padding: 20px; font-style: italic; color: #666; }
+
+    </style>
 </head>
 <body>
 
@@ -145,15 +150,15 @@
             <a href="index.html" class="logo">
                 <img src="logo.JPG" alt="Logo El Vergel" style="height: 50px;">
             </a>
-           <div class="nav-links">
-    <a href="index.html">Inicio</a>
-    
-    <a href="#" onclick="abrirRastreo()">📦 Rastrear</a> 
-    
-    <a href="#ofertas">Ofertas</a>
-    <a href="#productos">Pedidos</a>
-    <a href="#contacto">Contacto</a>
-</div>
+            <div class="nav-links">
+                <a href="index.html">Inicio</a>
+                
+                <a href="#" onclick="abrirRastreo()">📦 Rastrear</a>
+
+                <a href="#ofertas">Ofertas</a>
+                <a href="#productos">Pedidos</a>
+                <a href="#contacto">Contacto</a>
+            </div>
             <div class="cart-btn" onclick="toggleCart()">
                 🛒 <span id="cart-count" class="cart-count">0</span>
             </div>
@@ -162,12 +167,18 @@
 
     <section id="tracking-section">
         <div class="status-card">
-            <h2>📦 Estado de tu Pedido</h2>
-            <div id="tracking-result">
-                <div class="loader">Buscando tu pedido...</div>
+            <h2>📦 Rastrea tu Pedido</h2>
+            <p>Ingresa el código de tu pedido para ver el estado.</p>
+            
+            <div style="display: flex; gap: 10px; justify-content: center; margin-bottom: 20px;">
+                <input type="text" id="tracking-id-input" placeholder="Ej: a1b2c3d4" style="padding: 10px; width: 60%; font-size: 1rem;">
+                <button class="btn-add" onclick="buscarPedidoManual()" style="width: auto;">Buscar 🔍</button>
             </div>
+
+            <div id="tracking-result"></div>
+            
             <br>
-            <a href="index.html" class="btn-add" style="text-decoration: none; width: auto; display: inline-block;">⬅ Volver a la Tienda</a>
+            <a href="#" onclick="volverAlInicio()" class="btn-add" style="text-decoration: none; width: auto; display: inline-block; background-color: #666;">⬅ Volver al Inicio</a>
         </div>
     </section>
 
@@ -245,30 +256,41 @@
     </div>
 
     <script>
-        // ⚠️ PEGA AQUÍ TU NUEVA URL DE GOOGLE APPS SCRIPT ⚠️
+        // ⚠️ PEGA AQUÍ TU URL DE GOOGLE APPS SCRIPT ENTRE LAS COMILLAS ⚠️
         const API_URL = 'https://script.google.com/macros/s/AKfycbzDOwPK2N6EcNrMmwNx_3hFle8stwjmxUp0RbKgw6-bl9WJAyY5_iXslqOA882447A/exec';
         
         let carrito = [];
         let productosGlobal = [];
 
         document.addEventListener('DOMContentLoaded', () => {
-            // VERIFICAR SI HAY ID DE PEDIDO EN LA URL
-            const urlParams = new URLSearchParams(window.location.search);
-            const idPedido = urlParams.get('id');
-
-            if (idPedido) {
-                // MODO RASTREO: Ocultar tienda y mostrar rastreo
-                document.getElementById('main-content').style.display = 'none';
-                document.getElementById('tracking-section').style.display = 'block';
-                buscarEstadoPedido(idPedido);
-            } else {
-                // MODO TIENDA: Cargar productos normales
-                cargarProductos();
-                cargarContenido();
-            }
+            // Cargar productos al iniciar
+            cargarProductos();
+            cargarContenido();
         });
 
-        // --- FUNCIÓN DE RASTREO ---
+        // --- FUNCIONES DE RASTREO MANUAL ---
+        function abrirRastreo() {
+            document.getElementById('main-content').style.display = 'none';
+            document.getElementById('tracking-section').style.display = 'block';
+            document.getElementById('tracking-result').innerHTML = '';
+            document.getElementById('tracking-id-input').value = '';
+        }
+
+        function volverAlInicio() {
+            document.getElementById('tracking-section').style.display = 'none';
+            document.getElementById('main-content').style.display = 'block';
+        }
+
+        function buscarPedidoManual() {
+            const inputId = document.getElementById('tracking-id-input').value.trim();
+            if (inputId === "") {
+                alert("Por favor, escribe el código de tu pedido.");
+                return;
+            }
+            document.getElementById('tracking-result').innerHTML = '<div class="loader">Buscando en el sistema... 🔍</div>';
+            buscarEstadoPedido(inputId);
+        }
+
         function buscarEstadoPedido(id) {
             fetch(API_URL + '?action=getPedido&id=' + id)
                 .then(response => response.json())
@@ -280,11 +302,10 @@
                             ticketHTML = `<div><p>Tu Ticket:</p><img src="${data.ticket}" class="ticket-img" alt="Ticket de compra"></div>`;
                         }
                         
-                        // Clase de color según estado
                         let estadoClass = 'status-Recibido';
-                        if(data.estado.includes('Preparación')) estadoClass = 'status-En';
-                        if(data.estado.includes('Listo')) estadoClass = 'status-Listo';
-                        if(data.estado.includes('Entregado')) estadoClass = 'status-Entregado';
+                        if(data.estado && data.estado.includes('Preparación')) estadoClass = 'status-En';
+                        if(data.estado && data.estado.includes('Listo')) estadoClass = 'status-Listo';
+                        if(data.estado && data.estado.includes('Entregado')) estadoClass = 'status-Entregado';
 
                         resultDiv.innerHTML = `
                             <p style="color:#666;">ID Pedido: <strong>${id}</strong></p>
@@ -426,58 +447,15 @@
             .then(response => response.json())
             .then(data => {
                 if(data.status === 'success') {
-                    // AQUÍ GENERAMOS EL LINK DE SEGUIMIENTO REAL PARA EL USUARIO
-                    // Quitamos el '#' y el '?' para tener una dirección limpia
-                    const baseUrl = window.location.href.split('#')[0].split('?')[0];
-                    const linkSeguimiento = baseUrl + '?id=' + data.idPedido;
+                    // Mensaje actualizado para usar el buscador manual
+                    alert('¡Pedido Recibido! 🍊\n\nTu Código de pedido es: ' + data.idPedido + '\n\nVe a "Rastrear" en el menú e ingresa este código para ver el estado.');
                     
-                    alert('¡Pedido Recibido! 🍊\n\nGuarda este link para ver el estado:\n' + linkSeguimiento);
-                    
-                    // Opcional: Redirigir al usuario al rastreo directamente
-                    // window.location.href = linkSeguimiento;
-
                     carrito = []; actualizarCarritoUI(); toggleCart();
                 } else { alert('Hubo un error al enviar.'); }
             })
             .catch(error => { console.error(error); alert('Pedido enviado (sin confirmación inmediata).'); carrito = []; actualizarCarritoUI(); toggleCart(); })
             .finally(() => { btn.innerText = '✅ Confirmar Pedido'; btn.disabled = false; });
         }
-            // --- FUNCIÓN 1: Para abrir la sección de búsqueda ---
-    function abrirRastreo() {
-        // Ocultamos la tienda y mostramos el buscador
-        document.getElementById('main-content').style.display = 'none';
-        document.getElementById('tracking-section').style.display = 'block';
-        
-        // Limpiamos el resultado anterior por si acaso
-        document.getElementById('tracking-result').innerHTML = '';
-        document.getElementById('tracking-id-input').value = '';
-    }
-
-    // --- FUNCIÓN 2: Para ejecutar la búsqueda manual ---
-    function buscarPedidoManual() {
-        const inputId = document.getElementById('tracking-id-input').value.trim();
-        
-        if (inputId === "") {
-            alert("Por favor, escribe el código de tu pedido.");
-            return;
-        }
-
-        // Mostramos que estamos pensando...
-        document.getElementById('tracking-result').innerHTML = '<div class="loader">Buscando en el sistema... 🔍</div>';
-
-        // Llamamos a la función que conecta con Google (reutilizamos la que ya tenías)
-        buscarEstadoPedido(inputId);
-    }
-
-    // --- FUNCIÓN 3: Volver al inicio (Opcional pero recomendada) ---
-    function volverAlInicio() {
-        document.getElementById('tracking-section').style.display = 'none';
-        document.getElementById('main-content').style.display = 'block';
-    }
     </script>
 </body>
 </html>
-
-
-
-
