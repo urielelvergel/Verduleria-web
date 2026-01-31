@@ -217,71 +217,133 @@
         </div>
     </section>
 
-    <script>
-        // ⚠️ PEGA AQUÍ TU URL DEL SCRIPT DE GOOGLE ⚠️
-        const API_URL = 'https://script.google.com/macros/s/AKfycbz1z-YwHC561GFP97iSpsnohBdDIbmxSCZINMh1F3FSjL1xZb4295UdiNThYzbI-bw/exec'; 
+// ⚠️ PEGA AQUÍ TU URL DEL SCRIPT DE GOOGLE ⚠️
+    const API_URL = 'AQUI_VA_TU_URL_DEL_SCRIPT_DE_GOOGLE'; 
 
-        // --- 1. FUNCIÓN DE NAVEGACIÓN (LA QUE FALTABA) ---
-        function navegar(seccionId) {
-            // a. Ocultar todas las secciones
-            const secciones = document.querySelectorAll('section');
-            secciones.forEach(sec => sec.style.display = 'none');
+    let carrito = [];
+    let productosGlobal = []; // Para guardar la lista y buscar precios rápido
 
-            // b. Mostrar la sección elegida
-            const seccionMostrar = document.getElementById(seccionId);
-            if(seccionMostrar) {
-                seccionMostrar.style.display = 'block';
-            }
+    // --- 1. FUNCIÓN DE NAVEGACIÓN ---
+    function navegar(seccionId) {
+        const secciones = document.querySelectorAll('section');
+        secciones.forEach(sec => sec.style.display = 'none');
 
-            // c. Actualizar el botón activo en el menú
-            const botones = document.querySelectorAll('.nav-btn');
-            botones.forEach(btn => btn.classList.remove('active'));
+        const seccionMostrar = document.getElementById(seccionId);
+        if(seccionMostrar) seccionMostrar.style.display = 'block';
+
+        // Actualizar menú activo
+        document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+        // Lógica simple para resaltar el botón
+        const btnActivo = Array.from(document.querySelectorAll('.nav-btn')).find(b => 
+            b.innerText.toLowerCase().includes(seccionId === 'home' ? 'inicio' : seccionId)
+        );
+        if(btnActivo) btnActivo.classList.add('active');
+    }
+
+    // --- 2. CARGA DE DATOS ---
+    window.onload = () => {
+        cargarProductos();
+    };
+
+    function cargarProductos() {
+        fetch(API_URL + '?action=getProductos')
+        .then(r => r.json())
+        .then(data => {
+            productosGlobal = data; // Guardamos en memoria
+            const container = document.getElementById('productos-grid');
+            container.innerHTML = ''; 
             
-            // Buscar el botón que corresponde y activarlo (truco simple)
-            botones.forEach(btn => {
-                if(btn.innerText.toLowerCase().includes(seccionId) || 
-                  (seccionId === 'home' && btn.innerText === 'Inicio')) {
-                    btn.classList.add('active');
-                }
+            data.forEach(p => {
+                if(p.Disponible === "FALSE" || p.Disponible === false) return;
+
+                // Lógica de pasos: 0.1 para kg, 1 para unidades
+                const esKg = p.Unidad.toLowerCase() === 'kg';
+                const paso = esKg ? 0.1 : 1;
+                const min = esKg ? 0.1 : 1;
+
+                // Botones rápidos solo para Kilos
+                const botonesExtra = esKg ? `
+                    <div style="margin-bottom:10px;">
+                        <button onclick="fijarCantidad('${p.ID_Producto}', 0.5)" class="btn-sm">½ kg</button>
+                        <button onclick="fijarCantidad('${p.ID_Producto}', 1)" class="btn-sm">1 kg</button>
+                    </div>` : '';
+
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <img src="${p.Imagen || 'https://via.placeholder.com/300'}" alt="${p.Nombre}">
+                    <div class="card-body">
+                        <h3>${p.Nombre}</h3>
+                        <p style="color:var(--naranja-logo); font-weight:bold; font-size:1.2rem;">
+                            $${p.Precio_Regular} / ${p.Unidad}
+                        </p>
+                        ${p.Precio_Oferta ? `<p style="color:green; font-size:0.9rem;">🔥 Oferta: $${p.Precio_Oferta} llevando +${p.Minimo_Oferta} ${p.Unidad}</p>` : ''}
+                        
+                        ${botonesExtra}
+
+                        <div style="display:flex; align-items:center; justify-content:center; gap:10px; margin-bottom:10px;">
+                            <button onclick="cambiarInput('${p.ID_Producto}', -${paso})" class="btn-sm">-</button>
+                            <input id="cant-${p.ID_Producto}" type="number" value="${min}" step="${paso}" min="${min}" style="width:50px; text-align:center; font-size:1.1rem; border:1px solid #ddd; border-radius:5px;">
+                            <span>${p.Unidad}</span>
+                            <button onclick="cambiarInput('${p.ID_Producto}', ${paso})" class="btn-sm">+</button>
+                        </div>
+
+                        <button onclick="agregar('${p.ID_Producto}')" class="btn-action">Agregar 🛒</button>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        })
+        .catch(e => console.log("Error:", e));
+    }
+
+    // --- 3. LÓGICA DEL CARRITO (Aquí aplicamos tu corrección) ---
+    
+    // Auxiliares para los inputs
+    function cambiarInput(id, delta) {
+        const input = document.getElementById('cant-'+id);
+        let val = parseFloat(input.value) + delta;
+        if(val < 0.1) val = 0.1;
+        input.value = Math.round(val * 100) / 100; // Evitar errores de decimales (0.300004)
+    }
+    function fijarCantidad(id, val) { document.getElementById('cant-'+id).value = val; }
+
+    function agregar(id) {
+        const prod = productosGlobal.find(p => p.ID_Producto === id);
+        const input = document.getElementById('cant-'+id);
+        const cantidad = parseFloat(input.value);
+
+        // AQUI ESTÁ TU LÓGICA MAYOR O IGUAL
+        let precioFinal = prod.Precio_Regular;
+        if (prod.Precio_Oferta && cantidad >= prod.Minimo_Oferta) {
+            precioFinal = prod.Precio_Oferta;
+            alert(`¡Genial! Aplicaste oferta mayorista en ${prod.Nombre} 🎉`);
+        }
+
+        // Buscar si ya existe en el carrito
+        const existente = carrito.find(item => item.id === id);
+        
+        if (existente) {
+            existente.cantidad += cantidad;
+            // Re-verificar oferta con la nueva cantidad total
+            if (prod.Precio_Oferta && existente.cantidad >= prod.Minimo_Oferta) {
+                existente.precio = prod.Precio_Oferta;
+            }
+        } else {
+            carrito.push({
+                id: id,
+                nombre: prod.Nombre,
+                precio: precioFinal,
+                cantidad: cantidad,
+                unidad: prod.Unidad
             });
         }
-
-        // --- 2. CARGA DE DATOS ---
-        window.onload = () => {
-            cargarProductos();
-            // cargarContenido(); // Descomenta cuando tengas datos en Sheets
-        };
-
-        function cargarProductos() {
-            fetch(API_URL + '?action=getProductos')
-            .then(r => r.json())
-            .then(data => {
-                const container = document.getElementById('productos-grid');
-                container.innerHTML = ''; // Limpiar
-                
-                data.forEach(p => {
-                    if(p.Disponible === "FALSE" || p.Disponible === false) return;
-
-                    // Crear tarjeta de producto
-                    const card = document.createElement('div');
-                    card.className = 'card';
-                    card.innerHTML = `
-                        <img src="${p.Imagen || 'https://via.placeholder.com/300'}" alt="${p.Nombre}">
-                        <div class="card-body">
-                            <h3>${p.Nombre}</h3>
-                            <p style="color:var(--naranja-logo); font-weight:bold; font-size:1.2rem;">
-                                $${p.Precio_Regular} / ${p.Unidad}
-                            </p>
-                            <button class="btn-action">Agregar +</button>
-                        </div>
-                    `;
-                    container.appendChild(card);
-                });
-            })
-            .catch(e => console.log("Error cargando productos (quizás falta la URL correcta):", e));
-        }
-    </script>
+        
+        alert(`Agregado: ${cantidad} ${prod.Unidad} de ${prod.Nombre}`);
+        console.log("Carrito actual:", carrito); // Míralo en la consola con F12
+    }
 </body>
 </html>
+
 
 
