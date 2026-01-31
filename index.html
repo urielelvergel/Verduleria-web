@@ -5,128 +5,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>El Vergel | Frutas y Verduras</title>
     <style>
-        /* --- 1. DISEÑO BASADO EN TU LOGO --- */
+        /* --- ESTILOS VISUALES --- */
         :root {
-            /* Colores extraídos de tu imagen */
-            --naranja-logo: #F39C12; /* Fondo del logo */
-            --verde-logo: #C0D92E;   /* Texto del logo */
-            --verde-oscuro: #2E7D32; /* Para contrastes */
+            --naranja-logo: #F39C12;
+            --verde-logo: #C0D92E;
+            --verde-oscuro: #2E7D32;
             --blanco: #ffffff;
             --gris-claro: #f4f4f4;
             --texto: #333;
         }
 
-        body { 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            margin: 0; 
-            background-color: var(--gris-claro); 
-            color: var(--texto);
-        }
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; background-color: var(--gris-claro); color: var(--texto); }
 
-        /* Navegación Moderna */
-        nav { 
-            background: var(--naranja-logo); 
-            padding: 1rem 2rem; 
-            position: sticky; 
-            top: 0; 
-            z-index: 1000; 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
-
-        .logo-text {
-            font-family: 'Brush Script MT', cursive; /* Tipografía estilo manuscrito */
-            font-size: 2rem;
-            color: var(--verde-logo);
-            text-shadow: 1px 1px 0 #000; /* Borde negro suave como el logo */
-            text-decoration: none;
-        }
-
+        /* Navegación */
+        nav { background: var(--naranja-logo); padding: 1rem 2rem; position: sticky; top: 0; z-index: 1000; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .logo-text { font-family: 'Brush Script MT', cursive; font-size: 2rem; color: var(--verde-logo); text-shadow: 1px 1px 0 #000; text-decoration: none; }
         .nav-links { display: flex; gap: 15px; }
-        
-        .nav-btn { 
-            background: transparent; 
-            border: none; 
-            color: white; 
-            font-weight: bold; 
-            font-size: 1rem; 
-            cursor: pointer; 
-            padding: 8px 15px; 
-            border-radius: 20px; 
-            transition: 0.3s;
-        }
-
-        .nav-btn:hover, .nav-btn.active { 
-            background: var(--verde-logo); 
-            color: #000; 
-        }
+        .nav-btn { background: transparent; border: none; color: white; font-weight: bold; font-size: 1rem; cursor: pointer; padding: 8px 15px; border-radius: 20px; transition: 0.3s; }
+        .nav-btn:hover, .nav-btn.active { background: var(--verde-logo); color: #000; }
 
         /* Secciones */
-        section { 
-            display: none; /* Ocultas por defecto */
-            padding: 30px 20px; 
-            max-width: 1200px; 
-            margin: 0 auto; 
-            animation: fadeIn 0.5s ease-in-out;
-        }
-        
-        /* El Home siempre visible al inicio */
+        section { display: none; padding: 30px 20px; max-width: 1200px; margin: 0 auto; animation: fadeIn 0.5s ease-in-out; }
         #home { display: block; } 
-
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* Estilos de Tarjetas (Grid) */
+        /* Tarjetas */
         .grid-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; }
-        
-        .card { 
-            background: var(--blanco); 
-            border-radius: 15px; 
-            overflow: hidden; 
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05); 
-            transition: transform 0.3s; 
-            border-bottom: 5px solid var(--naranja-logo);
-        }
-        
-        .card:hover { transform: translateY(-5px); }
+        .card { background: var(--blanco); border-radius: 15px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.05); border-bottom: 5px solid var(--naranja-logo); }
         .card img { width: 100%; height: 200px; object-fit: cover; }
         .card-body { padding: 20px; text-align: center; }
-        .card h3 { color: var(--verde-oscuro); margin-top: 0; }
-
-        /* Botones de Acción */
-        .btn-action {
-            background-color: var(--naranja-logo);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 25px;
-            font-weight: bold;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-block;
-            margin-top: 10px;
-            transition: 0.3s;
-        }
+        
+        /* Botones */
+        .btn-action { background-color: var(--naranja-logo); color: white; border: none; padding: 10px 20px; border-radius: 25px; font-weight: bold; cursor: pointer; margin-top: 10px; }
         .btn-action:hover { background-color: var(--verde-oscuro); }
-
-        /* Banner Principal */
-        .hero {
-            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1610832958506-aa56368176cf?q=80&w=1470&auto=format&fit=crop'); 
-            background-size: cover; 
-            background-position: center; 
-            color: white; 
-            text-align: center; 
-            padding: 80px 20px; 
-            border-radius: 0 0 20px 20px;
-            margin-bottom: 40px;
-        }
-        .hero h1 { font-size: 3.5rem; margin: 0; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); font-family: 'Brush Script MT', cursive; color: var(--verde-logo); -webkit-text-stroke: 1px black; }
-        .hero p { font-size: 1.5rem; margin-top: 10px; text-shadow: 1px 1px 2px black; }
-
         .btn-sm { background:#ddd; border:none; width:30px; height:30px; border-radius:50%; font-weight:bold; cursor:pointer; }
-.btn-sm:hover { background: var(--verde-logo); }
+        .btn-sm:hover { background: var(--verde-logo); }
 
+        .hero { background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1610832958506-aa56368176cf'); background-size: cover; color: white; text-align: center; padding: 80px 20px; border-radius: 0 0 20px 20px; margin-bottom: 40px; }
     </style>
 </head>
 <body>
@@ -143,212 +58,143 @@
     </nav>
 
     <section id="home">
-        <div class="hero">
-            <h1>El Vergel</h1>
-            <p>Frutas y Verduras Frescas</p>
-        </div>
-
-        <h2 style="text-align: center; color: var(--texto); margin-bottom: 30px;">Explora nuestra tienda</h2>
-        
+        <div class="hero"><h1>El Vergel</h1><p>Frescura Natural</p></div>
         <div class="grid-container">
             <div class="card">
-                <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=500" alt="Pedidos">
                 <div class="card-body">
                     <h3>Haz tu Pedido</h3>
-                    <p>Selecciona tus frutas y verduras favoritas por kg o unidad. ¡Tenemos ofertas increíbles!</p>
+                    <p>Frutas y verduras frescas.</p>
                     <button onclick="navegar('pedidos')" class="btn-action">Ir a Pedidos 🛒</button>
                 </div>
             </div>
-
-            <div class="card">
-                <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=500" alt="Tips">
-                <div class="card-body">
-                    <h3>Tips Saludables</h3>
-                    <p>Descubre cómo conservar mejor tus alimentos y beneficios para tu salud.</p>
-                    <button onclick="navegar('tips')" class="btn-action">Ver Tips 💡</button>
-                </div>
             </div>
-
-            <div class="card">
-                <img src="https://images.unsplash.com/photo-1495521821757-a1efb6729352?w=500" alt="Recetas">
-                <div class="card-body">
-                    <h3>Recetas de la Abuela</h3>
-                    <p>Cocina delicioso con nuestros productos frescos. ¡Mira los videos!</p>
-                    <button onclick="navegar('recetas')" class="btn-action">Ver Recetas 🍳</button>
-                </div>
-            </div>
-
-            <div class="card">
-                <img src="https://images.unsplash.com/photo-1534536281715-e28d76689b4d?w=500" alt="Contacto">
-                <div class="card-body">
-                    <h3>Contáctanos</h3>
-                    <p>¿Dudas? ¿Sugerencias? Estamos aquí para escucharte.</p>
-                    <button onclick="navegar('contacto')" class="btn-action">Escríbenos 📞</button>
-                </div>
-            </div>
-        </div>
     </section>
 
     <section id="pedidos">
         <h2 style="color: var(--naranja-logo);">📦 Realiza tu Pedido</h2>
-        <div id="productos-grid" class="grid-container">
-            <p>Cargando productos frescos...</p>
-        </div>
+        <div id="productos-grid" class="grid-container">Cargando productos...</div>
     </section>
 
-    <section id="tips">
-        <h2 style="color: var(--naranja-logo);">💡 Tips Saludables</h2>
-        <div id="tips-grid" class="grid-container">Cargando tips...</div>
-    </section>
-
-    <section id="recetas">
-        <h2 style="color: var(--naranja-logo);">🍳 Recetas Deliciosas</h2>
-        <div id="recetas-grid" class="grid-container">Cargando recetas...</div>
-    </section>
-
-    <section id="contacto">
-        <h2 style="color: var(--naranja-logo);">📞 Contacto</h2>
-        <div style="background: white; padding: 30px; border-radius: 15px; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
-            <p>📍 Dirección: Calle Falsa 123</p>
-            <p>📧 Email: geeneral@elvergelfrutasyverduras.com</p>
-            <hr>
-            <h3>Déjanos tu opinión</h3>
-            <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
-                <a href="LINK_SUGERENCIAS" target="_blank" class="btn-action" style="background: var(--verde-oscuro);">Buzón de Sugerencias</a>
-                <a href="LINK_RECLAMOS" target="_blank" class="btn-action" style="background: #d9534f;">Libro de Reclamos</a>
-            </div>
-        </div>
-    </section>
-
-// ⚠️ PEGA AQUÍ TU URL DEL SCRIPT DE GOOGLE ⚠️
-    const API_URL = 'https://script.google.com/macros/s/AKfycbz1z-YwHC561GFP97iSpsnohBdDIbmxSCZINMh1F3FSjL1xZb4295UdiNThYzbI-bw/exec'; 
-
-    let carrito = [];
-    let productosGlobal = []; // Para guardar la lista y buscar precios rápido
-
-    // --- 1. FUNCIÓN DE NAVEGACIÓN ---
-    function navegar(seccionId) {
-        const secciones = document.querySelectorAll('section');
-        secciones.forEach(sec => sec.style.display = 'none');
-
-        const seccionMostrar = document.getElementById(seccionId);
-        if(seccionMostrar) seccionMostrar.style.display = 'block';
-
-        // Actualizar menú activo
-        document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
-        // Lógica simple para resaltar el botón
-        const btnActivo = Array.from(document.querySelectorAll('.nav-btn')).find(b => 
-            b.innerText.toLowerCase().includes(seccionId === 'home' ? 'inicio' : seccionId)
-        );
-        if(btnActivo) btnActivo.classList.add('active');
-    }
-
-    // --- 2. CARGA DE DATOS ---
-    window.onload = () => {
-        cargarProductos();
-    };
-
-    function cargarProductos() {
-        fetch(API_URL + '?action=getProductos')
-        .then(r => r.json())
-        .then(data => {
-            productosGlobal = data; // Guardamos en memoria
-            const container = document.getElementById('productos-grid');
-            container.innerHTML = ''; 
-            
-            data.forEach(p => {
-                if(p.Disponible === "FALSE" || p.Disponible === false) return;
-
-                // Lógica de pasos: 0.1 para kg, 1 para unidades
-                const esKg = p.Unidad.toLowerCase() === 'kg';
-                const paso = esKg ? 0.1 : 1;
-                const min = esKg ? 0.1 : 1;
-
-                // Botones rápidos solo para Kilos
-                const botonesExtra = esKg ? `
-                    <div style="margin-bottom:10px;">
-                        <button onclick="fijarCantidad('${p.ID_Producto}', 0.5)" class="btn-sm">½ kg</button>
-                        <button onclick="fijarCantidad('${p.ID_Producto}', 1)" class="btn-sm">1 kg</button>
-                    </div>` : '';
-
-                const card = document.createElement('div');
-                card.className = 'card';
-                card.innerHTML = `
-                    <img src="${p.Imagen || 'https://via.placeholder.com/300'}" alt="${p.Nombre}">
-                    <div class="card-body">
-                        <h3>${p.Nombre}</h3>
-                        <p style="color:var(--naranja-logo); font-weight:bold; font-size:1.2rem;">
-                            $${p.Precio_Regular} / ${p.Unidad}
-                        </p>
-                        ${p.Precio_Oferta ? `<p style="color:green; font-size:0.9rem;">🔥 Oferta: $${p.Precio_Oferta} llevando +${p.Minimo_Oferta} ${p.Unidad}</p>` : ''}
-                        
-                        ${botonesExtra}
-
-                        <div style="display:flex; align-items:center; justify-content:center; gap:10px; margin-bottom:10px;">
-                            <button onclick="cambiarInput('${p.ID_Producto}', -${paso})" class="btn-sm">-</button>
-                            <input id="cant-${p.ID_Producto}" type="number" value="${min}" step="${paso}" min="${min}" style="width:50px; text-align:center; font-size:1.1rem; border:1px solid #ddd; border-radius:5px;">
-                            <span>${p.Unidad}</span>
-                            <button onclick="cambiarInput('${p.ID_Producto}', ${paso})" class="btn-sm">+</button>
-                        </div>
-
-                        <button onclick="agregar('${p.ID_Producto}')" class="btn-action">Agregar 🛒</button>
-                    </div>
-                `;
-                container.appendChild(card);
-            });
-        })
-        .catch(e => console.log("Error:", e));
-    }
-
-    // --- 3. LÓGICA DEL CARRITO (Aquí aplicamos tu corrección) ---
+    <section id="tips"><h2 style="color: var(--naranja-logo);">💡 Tips Saludables</h2><div id="tips-grid" class="grid-container">Próximamente...</div></section>
     
-    // Auxiliares para los inputs
-    function cambiarInput(id, delta) {
-        const input = document.getElementById('cant-'+id);
-        let val = parseFloat(input.value) + delta;
-        if(val < 0.1) val = 0.1;
-        input.value = Math.round(val * 100) / 100; // Evitar errores de decimales (0.300004)
-    }
-    function fijarCantidad(id, val) { document.getElementById('cant-'+id).value = val; }
+    <section id="recetas"><h2 style="color: var(--naranja-logo);">🍳 Recetas</h2><div id="recetas-grid" class="grid-container">Próximamente...</div></section>
 
-    function agregar(id) {
-        const prod = productosGlobal.find(p => p.ID_Producto === id);
-        const input = document.getElementById('cant-'+id);
-        const cantidad = parseFloat(input.value);
+    <section id="contacto"><h2 style="color: var(--naranja-logo);">📞 Contacto</h2><div style="text-align:center;">Email: contacto@elvergel.com</div></section>
 
-        // AQUI ESTÁ TU LÓGICA MAYOR O IGUAL
-        let precioFinal = prod.Precio_Regular;
-        if (prod.Precio_Oferta && cantidad >= prod.Minimo_Oferta) {
-            precioFinal = prod.Precio_Oferta;
-            alert(`¡Genial! Aplicaste oferta mayorista en ${prod.Nombre} 🎉`);
+    <script>
+        // ⚠️ PEGA AQUÍ TU URL DE APPS SCRIPT ⚠️
+        const API_URL = 'AQUI_PEGA_TU_URL_DEL_SCRIPT_DE_GOOGLE'; 
+
+        let carrito = [];
+        let productosGlobal = [];
+
+        // 1. NAVEGACIÓN
+        function navegar(seccionId) {
+            document.querySelectorAll('section').forEach(sec => sec.style.display = 'none');
+            const target = document.getElementById(seccionId);
+            if(target) target.style.display = 'block';
+            
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+            const btnActivo = Array.from(document.querySelectorAll('.nav-btn')).find(b => 
+                b.innerText.toLowerCase().includes(seccionId === 'home' ? 'inicio' : seccionId)
+            );
+            if(btnActivo) btnActivo.classList.add('active');
         }
 
-        // Buscar si ya existe en el carrito
-        const existente = carrito.find(item => item.id === id);
-        
-        if (existente) {
-            existente.cantidad += cantidad;
-            // Re-verificar oferta con la nueva cantidad total
-            if (prod.Precio_Oferta && existente.cantidad >= prod.Minimo_Oferta) {
-                existente.precio = prod.Precio_Oferta;
+        // 2. CARGA DE DATOS
+        window.onload = () => cargarProductos();
+
+        function cargarProductos() {
+            fetch(API_URL + '?action=getProductos')
+            .then(r => r.json())
+            .then(data => {
+                productosGlobal = data;
+                const container = document.getElementById('productos-grid');
+                container.innerHTML = ''; 
+                
+                data.forEach(p => {
+                    if(p.Disponible === "FALSE" || p.Disponible === false) return;
+
+                    // LÓGICA KG vs UNIDAD
+                    const esKilo = p.Unidad.toLowerCase() === 'kg';
+                    const paso = esKilo ? 0.1 : 1;
+                    const min = esKilo ? 0.1 : 1;
+
+                    // Botones rápidos para kg
+                    const botonesExtra = esKilo ? `
+                        <div style="margin-bottom:10px;">
+                            <button onclick="fijarCantidad('${p.ID_Producto}', 0.5)" class="btn-sm">½</button>
+                            <button onclick="fijarCantidad('${p.ID_Producto}', 1)" class="btn-sm">1</button>
+                        </div>` : '';
+
+                    const ofertaHTML = (p.Precio_Oferta && p.Minimo_Oferta) ? 
+                        `<p style="color:green; font-size:0.9rem;">🔥 Oferta: $${p.Precio_Oferta} llevando +${p.Minimo_Oferta} ${p.Unidad}</p>` : '';
+
+                    const card = document.createElement('div');
+                    card.className = 'card';
+                    card.innerHTML = `
+                        <img src="${p.Imagen || 'https://via.placeholder.com/300'}" alt="${p.Nombre}">
+                        <div class="card-body">
+                            <h3>${p.Nombre}</h3>
+                            <p style="color:var(--naranja-logo); font-weight:bold; font-size:1.2rem;">
+                                $${p.Precio_Regular} / ${p.Unidad}
+                            </p>
+                            ${ofertaHTML}
+                            ${botonesExtra}
+                            <div style="display:flex; justify-content:center; gap:10px; margin-bottom:10px;">
+                                <button onclick="cambiarInput('${p.ID_Producto}', -${paso})" class="btn-sm">-</button>
+                                <input id="cant-${p.ID_Producto}" type="number" value="${min}" step="${paso}" min="${min}" style="width:50px; text-align:center;">
+                                <button onclick="cambiarInput('${p.ID_Producto}', ${paso})" class="btn-sm">+</button>
+                            </div>
+                            <button onclick="agregar('${p.ID_Producto}')" class="btn-action">Agregar 🛒</button>
+                        </div>
+                    `;
+                    container.appendChild(card);
+                });
+            })
+            .catch(e => console.log("Error cargando:", e));
+        }
+
+        // 3. FUNCIONES DE CARRITO
+        function cambiarInput(id, delta) {
+            const input = document.getElementById('cant-'+id);
+            let val = parseFloat(input.value) + delta;
+            if(val < 0.1) val = 0.1;
+            input.value = Math.round(val * 100) / 100;
+        }
+        function fijarCantidad(id, val) { document.getElementById('cant-'+id).value = val; }
+
+        function agregar(id) {
+            const prod = productosGlobal.find(p => p.ID_Producto === id);
+            const cantidad = parseFloat(document.getElementById('cant-'+id).value);
+
+            // LÓGICA DE PRECIO Y OFERTA
+            let precioFinal = prod.Precio_Regular;
+            if (prod.Precio_Oferta && cantidad >= prod.Minimo_Oferta) {
+                precioFinal = prod.Precio_Oferta;
+                alert(`¡Oferta aplicada en ${prod.Nombre}!`);
             }
-        } else {
-            carrito.push({
-                id: id,
-                nombre: prod.Nombre,
-                precio: precioFinal,
-                cantidad: cantidad,
-                unidad: prod.Unidad
-            });
+
+            // Agregar o actualizar carrito
+            const existente = carrito.find(item => item.id === id);
+            if (existente) {
+                existente.cantidad += cantidad;
+                // Verificar oferta nuevamente con la nueva cantidad total
+                if (prod.Precio_Oferta && existente.cantidad >= prod.Minimo_Oferta) {
+                    existente.precio = prod.Precio_Oferta;
+                }
+            } else {
+                carrito.push({
+                    id: id,
+                    nombre: prod.Nombre,
+                    precio: precioFinal,
+                    cantidad: cantidad,
+                    unidad: prod.Unidad
+                });
+            }
+            alert(`Agregado: ${cantidad} ${prod.Unidad} de ${prod.Nombre}`);
+            console.log(carrito);
         }
-        
-        alert(`Agregado: ${cantidad} ${prod.Unidad} de ${prod.Nombre}`);
-        console.log("Carrito actual:", carrito); // Míralo en la consola con F12
-    }
+    </script>
 </body>
 </html>
-
-
-
-
-
