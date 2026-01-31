@@ -121,27 +121,22 @@
         .form-group input { width: 100%; padding: 8px; box-sizing: border-box; }
 
         /* --- NUEVO: ESTILOS RASTREO --- */
-        #tracking-section { display: none; text-align: center; padding: 50px 20px; }
-        .status-card {
-            background: white; padding: 30px; border-radius: 15px;
-            box-shadow: var(--shadow); max-width: 600px; margin: 0 auto;
-        }
-        .status-badge {
-            font-size: 1.5rem; font-weight: bold; padding: 10px 20px;
-            border-radius: 30px; display: inline-block; margin: 20px 0;
-            background: var(--light); color: var(--dark);
-        }
-        .status-Recibido { background: #E3F2FD; color: #1976D2; }
-        .status-En { background: #FFF3E0; color: #F57C00; } /* En Preparación */
-        .status-Listo { background: #E8F5E9; color: #388E3C; }
-        .status-Entregado { background: #4CAF50; color: white; }
-        
-        .ticket-img { max-width: 100%; border-radius: 10px; margin-top: 20px; border: 2px dashed #ccc; }
-        .main-content { transition: opacity 0.3s; }
+        <section id="tracking-section">
+        <div class="status-card">
+            <h2>📦 Rastrea tu Pedido</h2>
+            <p>Ingresa el código de tu pedido para ver el estado.</p>
+            
+            <div style="display: flex; gap: 10px; justify-content: center; margin-bottom: 20px;">
+                <input type="text" id="tracking-id-input" placeholder="Ej: a1b2c3d4" style="padding: 10px; width: 60%;">
+                <button class="btn-add" onclick="buscarPedidoManual()" style="width: auto;">Buscar 🔍</button>
+            </div>
 
-        .loader { text-align: center; padding: 20px; font-style: italic; color: #666; }
-
-    </style>
+            <div id="tracking-result"></div>
+            
+            <br>
+            <a href="index.html" class="btn-add" style="text-decoration: none; width: auto; display: inline-block; background-color: #666;">⬅ Volver al Inicio</a>
+        </div>
+    </section>
 </head>
 <body>
 
@@ -447,4 +442,5 @@
     </script>
 </body>
 </html>
+
 
