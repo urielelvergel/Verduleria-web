@@ -15,50 +15,18 @@
             --shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: var(--light);
-            color: var(--dark);
-        }
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; background-color: var(--light); color: var(--dark); }
 
         /* Cabecera */
-        header {
-            background-color: var(--white);
-            box-shadow: var(--shadow);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-
-        nav {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 1rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
+        header { background-color: var(--white); box-shadow: var(--shadow); position: sticky; top: 0; z-index: 1000; }
+        nav { max-width: 1200px; margin: 0 auto; padding: 1rem; display: flex; justify-content: space-between; align-items: center; }
         .logo { display: flex; align-items: center; text-decoration: none; }
-
         .nav-links { display: flex; gap: 20px; }
-        .nav-links a { text-decoration: none; color: var(--dark); font-weight: 500; transition: color 0.3s; }
+        .nav-links a { text-decoration: none; color: var(--dark); font-weight: 500; }
         .nav-links a:hover { color: var(--primary); }
 
-        .cart-btn {
-            background-color: var(--primary);
-            color: white;
-            padding: 8px 15px;
-            border-radius: 20px;
-            cursor: pointer;
-            position: relative;
-        }
-        .cart-count {
-            background-color: red; color: white; border-radius: 50%;
-            padding: 2px 6px; font-size: 0.8rem; position: absolute; top: -5px; right: -5px;
-        }
+        .cart-btn { background-color: var(--primary); color: white; padding: 8px 15px; border-radius: 20px; cursor: pointer; position: relative; }
+        .cart-count { background-color: red; color: white; border-radius: 50%; padding: 2px 6px; font-size: 0.8rem; position: absolute; top: -5px; right: -5px; }
 
         /* Secciones */
         section { padding: 40px 20px; max-width: 1200px; margin: 0 auto; }
@@ -67,80 +35,52 @@
         /* Hero */
         .hero {
             background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1542838132-92c53300491e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
-            background-size: cover; background-position: center;
-            color: white; text-align: center; padding: 100px 20px;
-            border-radius: 0 0 20px 20px;
+            background-size: cover; background-position: center; color: white; text-align: center; padding: 100px 20px;
         }
-        .hero h1 { font-size: 3rem; margin-bottom: 10px; }
+        .hero h1 { font-size: 3rem; margin: 0; }
 
-        /* Grilla Productos */
-        .product-grid, .content-grid {
-            display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px;
-        }
+        /* Grillas */
+        .product-grid, .content-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; }
 
-        .card {
-            background: var(--white); border-radius: 10px; overflow: hidden;
-            box-shadow: var(--shadow); transition: transform 0.3s;
-            display: flex; flex-direction: column;
-        }
-        .card:hover { transform: translateY(-5px); }
-
+        /* Tarjetas */
+        .card { background: var(--white); border-radius: 10px; overflow: hidden; box-shadow: var(--shadow); display: flex; flex-direction: column; }
         .card img { width: 100%; height: 200px; object-fit: cover; }
         .card-body { padding: 15px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
-        
         .card-title { font-weight: bold; font-size: 1.1rem; margin-bottom: 5px; }
         .price-tag { color: var(--secondary); font-weight: bold; font-size: 1.2rem; }
         .promo-badge { background-color: var(--primary); color: white; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; display: inline-block; margin-bottom: 5px; }
 
-        .btn-add {
-            background-color: var(--secondary); color: white; border: none;
-            padding: 10px; width: 100%; border-radius: 5px; cursor: pointer; margin-top: 10px; font-size: 1rem;
-        }
+        /* Controles de Cantidad y Botones */
+        .cantidad-control { display: flex; align-items: center; justify-content: space-between; background: #f9f9f9; border-radius: 5px; padding: 5px; margin-bottom: 10px; }
+        .cantidad-control input { width: 50px; text-align: center; border: none; background: transparent; font-weight: bold; font-size: 1.1rem; }
+        .cantidad-control button { background: #ddd; border: none; width: 30px; height: 30px; border-radius: 50%; cursor: pointer; font-weight: bold; }
+        
+        .btn-sm { padding: 5px 10px; font-size: 0.8rem; background: var(--secondary); color: white; border: none; border-radius: 15px; cursor: pointer; }
+        .btn-add { background-color: var(--secondary); color: white; border: none; padding: 10px; width: 100%; border-radius: 5px; cursor: pointer; margin-top: 10px; font-size: 1rem; }
         .btn-add:hover { background-color: #388E3C; }
 
-        /* Video Container */
-        .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; background: #000; }
-        .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
-
-        /* Contacto */
-        .forms-container { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
-        .btn-form { display: inline-block; padding: 15px 30px; background-color: var(--primary); color: white; text-decoration: none; border-radius: 5px; font-weight: bold; }
-
-        /* Footer */
-        footer { background-color: var(--dark); color: white; text-align: center; padding: 20px; margin-top: 40px; }
+        /* Estilos Rastreo */
+        #tracking-section { display: none; text-align: center; padding: 50px 20px; }
+        .status-card { background: white; padding: 30px; border-radius: 15px; box-shadow: var(--shadow); max-width: 600px; margin: 0 auto; }
+        .status-badge { font-size: 1.5rem; font-weight: bold; padding: 10px 20px; border-radius: 30px; display: inline-block; margin: 20px 0; background: var(--light); }
+        .status-Recibido { background: #E3F2FD; color: #1976D2; }
+        .status-En { background: #FFF3E0; color: #F57C00; }
+        .status-Listo { background: #E8F5E9; color: #388E3C; }
+        .status-Entregado { background: #4CAF50; color: white; }
+        .ticket-img { max-width: 100%; border-radius: 10px; margin-top: 20px; border: 2px dashed #ccc; }
 
         /* Modal Carrito */
-        .modal {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.5); z-index: 2000; justify-content: center; align-items: center;
-        }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 2000; justify-content: center; align-items: center; }
         .modal-content { background: white; padding: 20px; border-radius: 10px; width: 90%; max-width: 500px; max-height: 80vh; overflow-y: auto; }
         .cart-item { display: flex; justify-content: space-between; border-bottom: 1px solid #eee; padding: 10px 0; }
         .form-group { margin-bottom: 15px; }
         .form-group label { display: block; margin-bottom: 5px; }
         .form-group input { width: 100%; padding: 8px; box-sizing: border-box; }
 
-        /* --- ESTILOS RASTREO --- */
-        #tracking-section { display: none; text-align: center; padding: 50px 20px; }
-        .status-card {
-            background: white; padding: 30px; border-radius: 15px;
-            box-shadow: var(--shadow); max-width: 600px; margin: 0 auto;
-        }
-        .status-badge {
-            font-size: 1.5rem; font-weight: bold; padding: 10px 20px;
-            border-radius: 30px; display: inline-block; margin: 20px 0;
-            background: var(--light); color: var(--dark);
-        }
-        .status-Recibido { background: #E3F2FD; color: #1976D2; }
-        .status-En { background: #FFF3E0; color: #F57C00; } /* En Preparación */
-        .status-Listo { background: #E8F5E9; color: #388E3C; }
-        .status-Entregado { background: #4CAF50; color: white; }
-        
-        .ticket-img { max-width: 100%; border-radius: 10px; margin-top: 20px; border: 2px dashed #ccc; }
-        .main-content { transition: opacity 0.3s; }
-
         .loader { text-align: center; padding: 20px; font-style: italic; color: #666; }
-
+        .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; background: #000; }
+        .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+        footer { background-color: var(--dark); color: white; text-align: center; padding: 20px; margin-top: 40px; }
     </style>
 </head>
 <body>
@@ -148,14 +88,11 @@
     <header>
         <nav>
             <a href="index.html" class="logo">
-                <img src="logo.JPG" alt="Logo El Vergel" style="height: 50px;">
+                <img src="logo.JPG" alt="Logo" style="height: 50px;">
             </a>
             <div class="nav-links">
                 <a href="index.html">Inicio</a>
-                
                 <a href="#" onclick="abrirRastreo()">📦 Rastrear</a>
-
-                <a href="#ofertas">Ofertas</a>
                 <a href="#productos">Pedidos</a>
                 <a href="#contacto">Contacto</a>
             </div>
@@ -168,30 +105,27 @@
     <section id="tracking-section">
         <div class="status-card">
             <h2>📦 Rastrea tu Pedido</h2>
-            <p>Ingresa el código de tu pedido para ver el estado.</p>
-            
+            <p>Ingresa el código que recibiste al comprar (ej: 31012026-1234).</p>
             <div style="display: flex; gap: 10px; justify-content: center; margin-bottom: 20px;">
-                <input type="text" id="tracking-id-input" placeholder="Ej: a1b2c3d4" style="padding: 10px; width: 60%; font-size: 1rem;">
+                <input type="text" id="tracking-id-input" placeholder="Código de pedido" style="padding: 10px; width: 60%; font-size: 1rem;">
                 <button class="btn-add" onclick="buscarPedidoManual()" style="width: auto;">Buscar 🔍</button>
             </div>
-
             <div id="tracking-result"></div>
-            
             <br>
-            <a href="#" onclick="volverAlInicio()" class="btn-add" style="text-decoration: none; width: auto; display: inline-block; background-color: #666;">⬅ Volver al Inicio</a>
+            <a href="#" onclick="volverAlInicio()" class="btn-add" style="background:#666; width:auto; display:inline-block; text-decoration:none;">⬅ Volver a la Tienda</a>
         </div>
     </section>
 
-    <div id="main-content" class="main-content">
-        <div id="inicio" class="hero">
+    <div id="main-content">
+        <div class="hero">
             <h1>Bienvenido a El Vergel</h1>
-            <p>Frutas y verduras frescas seleccionadas para ti.</p>
+            <p>Frutas y verduras frescas a tu mesa.</p>
         </div>
 
         <section id="ofertas">
-            <h2>🔥 Ofertas Imperdibles</h2>
-            <div id="ofertas-container" class="product-grid">
-                <div class="loader">Cargando ofertas...</div>
+            <h2>🔥 Ofertas y Contenido</h2>
+            <div id="ofertas-container" class="content-grid">
+                <div class="loader">Cargando contenido...</div>
             </div>
         </section>
 
@@ -202,128 +136,48 @@
             </div>
         </section>
 
-        <section id="tips">
-            <h2>💡 Tips y Recetas</h2>
-            <div id="tips-container" class="content-grid">
-                <div class="loader">Cargando contenido...</div>
-            </div>
-        </section>
-
         <section id="contacto">
-            <h2>📞 Satisfacción y Contacto</h2>
-            <p style="text-align: center; margin-bottom: 20px;">Tu opinión nos ayuda a crecer.</p>
-            
-            <div class="forms-container">
-                <a href="#" class="btn-form" target="_blank">📋 Buzón de Sugerencias</a>
-                <a href="#" class="btn-form" target="_blank">📢 Libro de Reclamos</a>
-            </div>
-
-            <div style="text-align: center; margin-top: 40px;">
-                <h3>¿Quiénes Somos?</h3>
-                <p>Somos una verdulería familiar comprometida con llevar lo mejor del campo a tu mesa.</p>
+            <h2>📞 Contacto</h2>
+            <div style="text-align: center;">
+                <p>¿Dudas? Escríbenos.</p>
+                <div class="forms-container" style="display:flex; justify-content:center; gap:20px;">
+                    <a href="#" class="btn-add" style="width:auto; text-decoration:none;">📋 Sugerencias</a>
+                </div>
             </div>
         </section>
     </div>
 
-    <footer>
-        <p>&copy; 2024 El Vergel. Todos los derechos reservados.</p>
-    </footer>
+    <footer><p>&copy; 2026 El Vergel</p></footer>
 
     <div id="cart-modal" class="modal">
         <div class="modal-content">
             <h3 style="color: var(--primary);">🛒 Tu Canasta</h3>
-            <div id="cart-items">
-                <p>Tu carrito está vacío.</p>
-            </div>
+            <div id="cart-items"><p>Tu carrito está vacío.</p></div>
             <div style="text-align: right; margin: 20px 0; font-weight: bold; font-size: 1.2rem;">
                 Total: $<span id="cart-total">0</span>
             </div>
-            
             <hr>
-            <h4>Finalizar Pedido</h4>
-            <div class="form-group">
-                <label>Nombre y Apellido:</label>
-                <input type="text" id="cliente-nombre" placeholder="Ej: Juan Perez">
-            </div>
-            <div class="form-group">
-                <label>WhatsApp:</label>
-                <input type="tel" id="cliente-whatsapp" placeholder="Ej: 11 1234 5678">
-            </div>
-
+            <h4>Datos de Envío</h4>
+            <div class="form-group"><label>Nombre:</label><input type="text" id="cliente-nombre"></div>
+            <div class="form-group"><label>WhatsApp:</label><input type="tel" id="cliente-whatsapp"></div>
             <button class="btn-add" onclick="enviarPedido()">✅ Confirmar Pedido</button>
-            <button onclick="toggleCart()" style="margin-top: 10px; background: transparent; border: none; color: #666; cursor: pointer; width: 100%;">Seguir comprando</button>
+            <button onclick="toggleCart()" style="margin-top:10px; width:100%; border:none; background:none; cursor:pointer; color:#666;">Seguir comprando</button>
         </div>
     </div>
 
     <script>
-        // ⚠️ PEGA AQUÍ TU URL DE GOOGLE APPS SCRIPT ENTRE LAS COMILLAS ⚠️
-        const API_URL = 'https://script.google.com/macros/s/AKfycbzhgujU9z3_KTtFA5phW0XZA1CEtU2qhp7hZhYQ8pFSwhB5LRK2-PDu0SRhy-CHcKw/exec';
+        // ⚠️ PEGA AQUÍ TU URL DE IMPLEMENTACIÓN DE GOOGLE APPS SCRIPT ⚠️
+        const API_URL = 'https://script.google.com/macros/s/AKfycbwvN6eo5emMWv-nqNsfdg5WZ6ApqLfu3Nizr4arWCfdfn5CW7n-PV6HclgFpmhWHg/exec'; 
         
         let carrito = [];
         let productosGlobal = [];
 
         document.addEventListener('DOMContentLoaded', () => {
-            // Cargar productos al iniciar
             cargarProductos();
             cargarContenido();
         });
 
-        // --- FUNCIONES DE RASTREO MANUAL ---
-        function abrirRastreo() {
-            document.getElementById('main-content').style.display = 'none';
-            document.getElementById('tracking-section').style.display = 'block';
-            document.getElementById('tracking-result').innerHTML = '';
-            document.getElementById('tracking-id-input').value = '';
-        }
-
-        function volverAlInicio() {
-            document.getElementById('tracking-section').style.display = 'none';
-            document.getElementById('main-content').style.display = 'block';
-        }
-
-        function buscarPedidoManual() {
-            const inputId = document.getElementById('tracking-id-input').value.trim();
-            if (inputId === "") {
-                alert("Por favor, escribe el código de tu pedido.");
-                return;
-            }
-            document.getElementById('tracking-result').innerHTML = '<div class="loader">Buscando en el sistema... 🔍</div>';
-            buscarEstadoPedido(inputId);
-        }
-
-        function buscarEstadoPedido(id) {
-            fetch(API_URL + '?action=getPedido&id=' + id)
-                .then(response => response.json())
-                .then(data => {
-                    const resultDiv = document.getElementById('tracking-result');
-                    if (data.encontrado) {
-                        let ticketHTML = '';
-                        if (data.ticket) {
-                            ticketHTML = `<div><p>Tu Ticket:</p><img src="${data.ticket}" class="ticket-img" alt="Ticket de compra"></div>`;
-                        }
-                        
-                        let estadoClass = 'status-Recibido';
-                        if(data.estado && data.estado.includes('Preparación')) estadoClass = 'status-En';
-                        if(data.estado && data.estado.includes('Listo')) estadoClass = 'status-Listo';
-                        if(data.estado && data.estado.includes('Entregado')) estadoClass = 'status-Entregado';
-
-                        resultDiv.innerHTML = `
-                            <p style="color:#666;">ID Pedido: <strong>${id}</strong></p>
-                            <div class="status-badge ${estadoClass}">${data.estado}</div>
-                            <p style="font-size: 1.2rem;">Total a Pagar: <strong>$${data.total}</strong></p>
-                            ${ticketHTML}
-                        `;
-                    } else {
-                        resultDiv.innerHTML = `<p style="color:red;">❌ No encontramos un pedido con ese código.</p>`;
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    document.getElementById('tracking-result').innerHTML = `<p>Error al conectar con el servidor.</p>`;
-                });
-        }
-
-        // --- FUNCIONES DE LA TIENDA ---
+        // --- 1. CARGA DE PRODUCTOS (FILTRO DISPONIBLE Y BOTONES KG/UN) ---
         function cargarProductos() {
             fetch(API_URL + '?action=getProductos')
                 .then(response => response.json())
@@ -333,130 +187,128 @@
                 });
         }
 
-        function cargarContenido() {
-            fetch(API_URL + '?action=getContenido')
-                .then(response => response.json())
-                .then(data => renderizarContenido(data));
-        }
-
         function renderizarProductos(productos) {
             const container = document.getElementById('productos-container');
             container.innerHTML = '';
+            
             productos.forEach(p => {
-                if(p.Disponible === false || p.Disponible === "FALSE") return;
+                // FILTRO DE VISIBILIDAD: Si dice FALSE, NO, o vacío, no se muestra
+                if(p.Disponible === false || p.Disponible === "FALSE" || p.Disponible === "NO") return;
                 
-                let precioDisplay = `$${p.Precio_Regular}`;
-                if(p.Precio_Oferta && p.Cantidad_Oferta) {
-                    precioDisplay = `<div>$${p.Precio_Regular}</div>
-                                     <div style="font-size:0.8em; color:var(--primary)">Oferta x ${p.Cantidad_Oferta}${p.Tipo_Venta}: $${p.Precio_Oferta}</div>`;
+                let controlesHTML = '';
+                const unidadTexto = p.Unidad === 'kg' ? 'kg' : 'un';
+
+                if (p.Unidad === 'kg') {
+                    // BOTONES PARA PESO (con opciones rápidas)
+                    controlesHTML = `
+                        <div style="display:flex; gap:5px; justify-content:center; margin-bottom:10px;">
+                            <button class="btn-sm" onclick="ajustarCantidad('${p.ID_Producto}', 0.5)">½ kg</button>
+                            <button class="btn-sm" onclick="ajustarCantidad('${p.ID_Producto}', 1.0)">1 kg</button>
+                            <button class="btn-sm" onclick="ajustarCantidad('${p.ID_Producto}', 2.0)">2 kg</button>
+                        </div>
+                        <div class="cantidad-control">
+                            <button onclick="cambiarValor('${p.ID_Producto}', -0.1)">-</button>
+                            <input type="number" id="cant-${p.ID_Producto}" value="1.0" step="0.1" readonly>
+                            <span style="font-size:0.9rem">${unidadTexto}</span>
+                            <button onclick="cambiarValor('${p.ID_Producto}', 0.1)">+</button>
+                        </div>
+                    `;
+                } else {
+                    // BOTONES PARA UNIDAD (Simples)
+                    controlesHTML = `
+                        <div class="cantidad-control">
+                            <button onclick="cambiarValor('${p.ID_Producto}', -1)">-</button>
+                            <input type="number" id="cant-${p.ID_Producto}" value="1" readonly>
+                            <span style="font-size:0.9rem">${unidadTexto}</span>
+                            <button onclick="cambiarValor('${p.ID_Producto}', 1)">+</button>
+                        </div>
+                    `;
                 }
 
+                // MOSTRAR TARJETA
                 const card = document.createElement('div');
                 card.className = 'card';
+                
+                // Texto de oferta si existe
+                let ofertaInfo = '';
+                if(p.Precio_Oferta && p.Minimo_Oferta) {
+                    ofertaInfo = `<div style="font-size:0.8rem; color:green; margin-top:5px;">
+                        🔥 Oferta: $${p.Precio_Oferta} llevando +${p.Minimo_Oferta} ${unidadTexto}
+                    </div>`;
+                }
+
                 card.innerHTML = `
                     <img src="${p.Imagen_URL || 'https://via.placeholder.com/300'}" onerror="this.src='https://via.placeholder.com/300?text=Sin+Foto'">
                     <div class="card-body">
-                        <div>
-                            <div class="card-title">${p.Nombre}</div>
-                            <div class="card-desc">${p.Descripcion || ''}</div>
-                            <div class="promo-badge">${p.Tipo_Venta}</div>
-                        </div>
-                        <div>
-                            <div class="price-tag">${precioDisplay}</div>
-                            <button class="btn-add" onclick="agregarAlCarrito('${p.ID_Producto}')">Agregar +</button>
-                        </div>
+                        <div class="card-title">${p.Nombre}</div>
+                        <div class="price-tag">$${p.Precio_Regular} <span style="font-size:0.6em; color:#666">/${unidadTexto}</span></div>
+                        ${ofertaInfo}
+                        <hr style="margin: 10px 0; border:0; border-top:1px solid #eee;">
+                        ${controlesHTML}
+                        <button class="btn-add" onclick="agregarAlCarritoComplejo('${p.ID_Producto}')">Agregar +</button>
                     </div>
                 `;
                 container.appendChild(card);
             });
         }
 
-        function renderizarContenido(items) {
-            const ofertasContainer = document.getElementById('ofertas-container');
-            const tipsContainer = document.getElementById('tips-container');
-            ofertasContainer.innerHTML = '';
-            tipsContainer.innerHTML = '';
-
-            items.forEach(item => {
-                const elemento = document.createElement('div');
-                elemento.className = 'card';
-                let mediaHTML = '';
-                if(item.Video_URL && item.Video_URL.includes('youtube')) {
-                    const videoId = item.Video_URL.split('v=')[1]?.split('&')[0];
-                    mediaHTML = `<div class="video-container"><iframe src="https://www.youtube.com/embed/${videoId}" allowfullscreen></iframe></div>`;
-                } else if (item.Imagen_URL) {
-                    mediaHTML = `<img src="${item.Imagen_URL}" style="height:200px; object-fit:cover;">`;
-                }
-                elemento.innerHTML = `${mediaHTML}<div class="card-body"><div class="card-title">${item.Titulo}</div><p>${item.Descripcion}</p></div>`;
-                if(item.Tipo === 'Oferta') ofertasContainer.appendChild(elemento);
-                else tipsContainer.appendChild(elemento);
-            });
-            if(ofertasContainer.innerHTML === '') ofertasContainer.innerHTML = '<p>No hay ofertas especiales hoy.</p>';
+        // --- 2. LÓGICA DE CANTIDADES Y OFERTAS ---
+        function cambiarValor(id, delta) {
+            const input = document.getElementById(`cant-${id}`);
+            let val = parseFloat(input.value) + delta;
+            if(val < 0.1) val = 0.1; 
+            input.value = Math.round(val * 10) / 10;
         }
 
-        // --- CARRITO Y PEDIDOS ---
-        function agregarAlCarrito(id) {
+        function ajustarCantidad(id, valorFijo) {
+            document.getElementById(`cant-${id}`).value = valorFijo;
+        }
+
+        function agregarAlCarritoComplejo(id) {
             const producto = productosGlobal.find(p => p.ID_Producto == id);
+            const cantidadInput = parseFloat(document.getElementById(`cant-${id}`).value);
+            
+            // Lógica de Oferta: Verificamos precio
+            let precioFinal = producto.Precio_Regular;
+            
+            if (producto.Precio_Oferta && producto.Minimo_Oferta && cantidadInput >= producto.Minimo_Oferta) {
+                precioFinal = producto.Precio_Oferta;
+            }
+
             const existente = carrito.find(item => item.id == id);
-            if(existente) existente.cantidad++;
-            else carrito.push({ id: id, nombre: producto.Nombre, precio: producto.Precio_Regular, cantidad: 1, unidad: producto.Tipo_Venta });
+            if(existente) {
+                existente.cantidad += cantidadInput;
+                // Re-verificamos la oferta con la nueva cantidad TOTAL acumulada
+                if (producto.Precio_Oferta && producto.Minimo_Oferta && existente.cantidad >= producto.Minimo_Oferta) {
+                    existente.precio = producto.Precio_Oferta; // Aplicamos el precio de oferta a TODO
+                }
+            } else {
+                carrito.push({
+                    id: id,
+                    nombre: producto.Nombre,
+                    precio: precioFinal,
+                    cantidad: cantidadInput,
+                    unidad: producto.Unidad
+                });
+            }
+            
             actualizarCarritoUI();
-            alert(`¡${producto.Nombre} agregado!`);
+            alert(`¡Agregamos ${cantidadInput} ${producto.Unidad} de ${producto.Nombre}!`);
         }
 
-        function actualizarCarritoUI() {
-            document.getElementById('cart-count').innerText = carrito.reduce((acc, item) => acc + item.cantidad, 0);
-            const itemsContainer = document.getElementById('cart-items');
-            itemsContainer.innerHTML = '';
-            let total = 0;
-            carrito.forEach((item, index) => {
-                const subtotal = item.precio * item.cantidad;
-                total += subtotal;
-                itemsContainer.innerHTML += `
-                    <div class="cart-item">
-                        <div><strong>${item.nombre}</strong> (${item.unidad})<br>$${item.precio} x ${item.cantidad}</div>
-                        <div>$${subtotal} <button onclick="eliminarDelCarrito(${index})" style="background:red; color:white; border:none; border-radius:50%;">x</button></div>
-                    </div>`;
+        // --- 3. FUNCIONES GENERALES (Carrito, Contenido, Rastreo) ---
+        function cargarContenido() {
+            fetch(API_URL + '?action=getContenido').then(r => r.json()).then(items => {
+                const div = document.getElementById('ofertas-container');
+                div.innerHTML = '';
+                items.forEach(item => {
+                    const el = document.createElement('div'); el.className='card';
+                    let media = item.Imagen_URL ? `<img src="${item.Imagen_URL}">` : '';
+                    if(item.Video_URL && item.Video_URL.includes('youtube')) {
+                        let vidId = item.Video_URL.split('v=')[1]?.split('&')[0];
+                        media = `<div class="video-container"><iframe src="https://www.youtube.com/embed/${vidId}"></iframe></div>`;
+                    }
+                    el.innerHTML = `${media}<div class="card-body"><b>${item.Titulo}</b><p>${item.Descripcion}</p></div>`;
+                    div.appendChild(el);
+                });
             });
-            document.getElementById('cart-total').innerText = total;
-            if(carrito.length === 0) itemsContainer.innerHTML = '<p>Tu carrito está vacío.</p>';
-        }
-
-        function eliminarDelCarrito(index) { carrito.splice(index, 1); actualizarCarritoUI(); }
-        function toggleCart() { const modal = document.getElementById('cart-modal'); modal.style.display = modal.style.display === 'flex' ? 'none' : 'flex'; }
-
-        function enviarPedido() {
-            const nombre = document.getElementById('cliente-nombre').value;
-            const whatsapp = document.getElementById('cliente-whatsapp').value;
-            if(carrito.length === 0) return alert('El carrito está vacío');
-            if(!nombre || !whatsapp) return alert('Completa nombre y WhatsApp');
-
-            const btn = document.querySelector('.btn-add');
-            btn.innerText = 'Enviando...'; btn.disabled = true;
-
-            const pedidoData = {
-                nombre: nombre, whatsapp: whatsapp, total: document.getElementById('cart-total').innerText,
-                carrito: carrito.map(item => ({ nombre: item.nombre, cantidad: item.cantidad + ' ' + item.unidad, subtotal: item.precio * item.cantidad }))
-            };
-
-            fetch(API_URL, {
-                method: 'POST',
-                body: JSON.stringify(pedidoData),
-                headers: { "Content-Type": "text/plain" }
-            })
-            .then(response => response.json())
-            .then(data => {
-                if(data.status === 'success') {
-                    // Mensaje actualizado para usar el buscador manual
-                    alert('¡Pedido Recibido! 🍊\n\nTu Código de pedido es: ' + data.idPedido + '\n\nVe a "Rastrear" en el menú e ingresa este código para ver el estado.');
-                    
-                    carrito = []; actualizarCarritoUI(); toggleCart();
-                } else { alert('Hubo un error al enviar.'); }
-            })
-            .catch(error => { console.error(error); alert('Pedido enviado (sin confirmación inmediata).'); carrito = []; actualizarCarritoUI(); toggleCart(); })
-            .finally(() => { btn.innerText = '✅ Confirmar Pedido'; btn.disabled = false; });
-        }
-    </script>
-</body>
-</html>
-
