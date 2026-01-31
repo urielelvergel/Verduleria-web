@@ -3,199 +3,197 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>El Vergel | Frutas y Verduras</title>
+    <title>El Vergel - Frescura en tu hogar</title>
     <style>
-        /* --- ESTILOS VISUALES --- */
+        /* 1. Identidad Visual: Variables CSS para cambios rápidos */
         :root {
-            --naranja-logo: #F39C12;
-            --verde-logo: #C0D92E;
-            --verde-oscuro: #2E7D32;
-            --blanco: #ffffff;
-            --gris-claro: #f4f4f4;
-            --texto: #333;
+            --color-primary: #FF8C00; /* Naranja vibrante */
+            --color-accent: #A4C639;  /* Verde lima */
+            --color-text: #333333;
+            --color-bg: #F4F4F4;
+            --card-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
 
-        body { font-family: 'Segoe UI', sans-serif; margin: 0; background-color: var(--gris-claro); color: var(--texto); }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            margin: 0;
+            padding: 0;
+        }
 
-        /* Navegación */
-        nav { background: var(--naranja-logo); padding: 1rem 2rem; position: sticky; top: 0; z-index: 1000; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        .logo-text { font-family: 'Brush Script MT', cursive; font-size: 2rem; color: var(--verde-logo); text-shadow: 1px 1px 0 #000; text-decoration: none; }
-        .nav-links { display: flex; gap: 15px; }
-        .nav-btn { background: transparent; border: none; color: white; font-weight: bold; font-size: 1rem; cursor: pointer; padding: 8px 15px; border-radius: 20px; transition: 0.3s; }
-        .nav-btn:hover, .nav-btn.active { background: var(--verde-logo); color: #000; }
+        /* Hero Section */
+        header {
+            background-color: var(--color-primary);
+            color: white;
+            text-align: center;
+            padding: 2rem 1rem;
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 20px;
+        }
 
-        /* Secciones */
-        section { display: none; padding: 30px 20px; max-width: 1200px; margin: 0 auto; animation: fadeIn 0.5s ease-in-out; }
-        #home { display: block; } 
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        h1 {
+            font-family: 'Brush Script MT', cursive;
+            font-size: 3rem;
+            margin: 0;
+        }
 
-        /* Tarjetas */
-        .grid-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; }
-        .card { background: var(--blanco); border-radius: 15px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.05); border-bottom: 5px solid var(--naranja-logo); }
-        .card img { width: 100%; height: 200px; object-fit: cover; }
-        .card-body { padding: 20px; text-align: center; }
-        
-        /* Botones */
-        .btn-action { background-color: var(--naranja-logo); color: white; border: none; padding: 10px 20px; border-radius: 25px; font-weight: bold; cursor: pointer; margin-top: 10px; }
-        .btn-action:hover { background-color: var(--verde-oscuro); }
-        .btn-sm { background:#ddd; border:none; width:30px; height:30px; border-radius:50%; font-weight:bold; cursor:pointer; }
-        .btn-sm:hover { background: var(--verde-logo); }
+        /* Contenedor tipo Dashboard */
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            padding: 1.5rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
 
-        .hero { background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1610832958506-aa56368176cf'); background-size: cover; color: white; text-align: center; padding: 80px 20px; border-radius: 0 0 20px 20px; margin-bottom: 40px; }
+        /* Estilo de Tarjetas (Cards) */
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.2s;
+            cursor: pointer;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-bottom: 3px solid var(--color-accent);
+        }
+
+        .btn-accion {
+            background-color: var(--color-accent);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-top: 10px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
 
-    <nav>
-        <a href="#" onclick="navegar('home')" class="logo-text">El Vergel</a>
-        <div class="nav-links">
-            <button class="nav-btn active" onclick="navegar('home')">Inicio</button>
-            <button class="nav-btn" onclick="navegar('pedidos')">Pedidos</button>
-            <button class="nav-btn" onclick="navegar('tips')">Tips</button>
-            <button class="nav-btn" onclick="navegar('recetas')">Recetas</button>
-            <button class="nav-btn" onclick="navegar('contacto')">Contacto</button>
+    <header>
+        <h1>El Vergel</h1>
+        <p>Frutas y verduras seleccionadas</p>
+    </header>
+
+    <main class="dashboard" id="app">
+        <div class="card" onclick="mostrarSeccion('ofertas')">
+            <h3>🔥 Ofertas</h3>
+            <p>Precios bomba de la semana</p>
         </div>
-    </nav>
+        
+        <div class="card" onclick="mostrarSeccion('pedidos')">
+            <h3>🛒 Hacer Pedido</h3>
+            <p>Arma tu carrito ahora</p>
+        </div>
 
-    <section id="home">
-        <div class="hero"><h1>El Vergel</h1><p>Frescura Natural</p></div>
-        <div class="grid-container">
-            <div class="card">
-                <div class="card-body">
-                    <h3>Haz tu Pedido</h3>
-                    <p>Frutas y verduras frescas.</p>
-                    <button onclick="navegar('pedidos')" class="btn-action">Ir a Pedidos 🛒</button>
-                </div>
-            </div>
-            </div>
+        <div class="card" onclick="mostrarSeccion('tracking')">
+            <h3>🚚 Seguimiento</h3>
+            <p>¿Dónde está mi pedido?</p>
+        </div>
+        
+        <div class="card" onclick="mostrarSeccion('recetas')">
+            <h3>🥑 Recetas</h3>
+            <p>Inspírate cocinando</p>
+        </div>
+    </main>
+
+    <section id="contenido-dinamico" style="padding: 20px; display: none;">
+        <button onclick="volverAlInicio()" class="btn-accion">⬅ Volver</button>
+        <div id="render-area"></div>
     </section>
-
-    <section id="pedidos">
-        <h2 style="color: var(--naranja-logo);">📦 Realiza tu Pedido</h2>
-        <div id="productos-grid" class="grid-container">Cargando productos...</div>
-    </section>
-
-    <section id="tips"><h2 style="color: var(--naranja-logo);">💡 Tips Saludables</h2><div id="tips-grid" class="grid-container">Próximamente...</div></section>
-    
-    <section id="recetas"><h2 style="color: var(--naranja-logo);">🍳 Recetas</h2><div id="recetas-grid" class="grid-container">Próximamente...</div></section>
-
-    <section id="contacto"><h2 style="color: var(--naranja-logo);">📞 Contacto</h2><div style="text-align:center;">Email: contacto@elvergel.com</div></section>
 
     <script>
-        // ⚠️ PEGA AQUÍ TU URL DE APPS SCRIPT ⚠️
-        const API_URL = 'https://script.google.com/macros/s/AKfycbz1z-YwHC561GFP97iSpsnohBdDIbmxSCZINMh1F3FSjL1xZb4295UdiNThYzbI-bw/exec'; 
+        // 1. CONFIGURACIÓN
+        // Aquí puse la URL que me pasaste antes:
+        const API_URL = "https://script.google.com/macros/s/AKfycbxbXBoIqQmVOpajUOfpUlx5rRiQ9DOLmLYVq4Fqj6xn8xD556euHm6Lsx88BM79rOU/exec"; 
+        
+        let inventario = []; 
 
-        let carrito = [];
-        let productosGlobal = [];
+        // 2. FUNCIÓN PARA TRAER DATOS
+        async function cargarInventario() {
+            const area = document.getElementById('render-area');
+            area.innerHTML = '<p>🔄 Cargando productos frescos...</p>';
 
-        // 1. NAVEGACIÓN
-        function navegar(seccionId) {
-            document.querySelectorAll('section').forEach(sec => sec.style.display = 'none');
-            const target = document.getElementById(seccionId);
-            if(target) target.style.display = 'block';
+            try {
+                const respuesta = await fetch(API_URL);
+                inventario = await respuesta.json();
+                console.log("Datos recibidos:", inventario); 
+                renderizarProductos(inventario); 
+            } catch (error) {
+                console.error("Error:", error);
+                area.innerHTML = '<p>❌ Hubo un error al cargar los productos. Revisa la consola.</p>';
+            }
+        }
+
+        // 3. FUNCIÓN PARA DIBUJAR LOS PRODUCTOS
+        function renderizarProductos(listaProductos) {
+            const area = document.getElementById('render-area');
+            area.innerHTML = ''; 
             
-            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
-            const btnActivo = Array.from(document.querySelectorAll('.nav-btn')).find(b => 
-                b.innerText.toLowerCase().includes(seccionId === 'home' ? 'inicio' : seccionId)
-            );
-            if(btnActivo) btnActivo.classList.add('active');
-        }
+            const contenedor = document.createElement('div');
+            contenedor.className = 'dashboard'; 
 
-        // 2. CARGA DE DATOS
-        window.onload = () => cargarProductos();
-
-        function cargarProductos() {
-            fetch(API_URL + '?action=getProductos')
-            .then(r => r.json())
-            .then(data => {
-                productosGlobal = data;
-                const container = document.getElementById('productos-grid');
-                container.innerHTML = ''; 
+            listaProductos.forEach(prod => {
+                const esPorPeso = prod.Tipo_Venta === 'kg';
                 
-                data.forEach(p => {
-                    if(p.Disponible === "FALSE" || p.Disponible === false) return;
-
-                    // LÓGICA KG vs UNIDAD
-                    const esKilo = p.Unidad.toLowerCase() === 'kg';
-                    const paso = esKilo ? 0.1 : 1;
-                    const min = esKilo ? 0.1 : 1;
-
-                    // Botones rápidos para kg
-                    const botonesExtra = esKilo ? `
-                        <div style="margin-bottom:10px;">
-                            <button onclick="fijarCantidad('${p.ID_Producto}', 0.5)" class="btn-sm">½</button>
-                            <button onclick="fijarCantidad('${p.ID_Producto}', 1)" class="btn-sm">1</button>
-                        </div>` : '';
-
-                    const ofertaHTML = (p.Precio_Oferta && p.Minimo_Oferta) ? 
-                        `<p style="color:green; font-size:0.9rem;">🔥 Oferta: $${p.Precio_Oferta} llevando +${p.Minimo_Oferta} ${p.Unidad}</p>` : '';
-
-                    const card = document.createElement('div');
-                    card.className = 'card';
-                    card.innerHTML = `
-                        <img src="${p.Imagen || 'https://via.placeholder.com/300'}" alt="${p.Nombre}">
-                        <div class="card-body">
-                            <h3>${p.Nombre}</h3>
-                            <p style="color:var(--naranja-logo); font-weight:bold; font-size:1.2rem;">
-                                $${p.Precio_Regular} / ${p.Unidad}
-                            </p>
-                            ${ofertaHTML}
-                            ${botonesExtra}
-                            <div style="display:flex; justify-content:center; gap:10px; margin-bottom:10px;">
-                                <button onclick="cambiarInput('${p.ID_Producto}', -${paso})" class="btn-sm">-</button>
-                                <input id="cant-${p.ID_Producto}" type="number" value="${min}" step="${paso}" min="${min}" style="width:50px; text-align:center;">
-                                <button onclick="cambiarInput('${p.ID_Producto}', ${paso})" class="btn-sm">+</button>
-                            </div>
-                            <button onclick="agregar('${p.ID_Producto}')" class="btn-action">Agregar 🛒</button>
-                        </div>
+                let controlesHTML = '';
+                if (esPorPeso) {
+                    controlesHTML = `
+                        <button class="btn-accion" onclick="agregarAlCarrito('${prod.ID_Producto}', 0.5)">+ 1/2 kg</button>
+                        <button class="btn-accion" onclick="agregarAlCarrito('${prod.ID_Producto}', 1)">+ 1 kg</button>
                     `;
-                    container.appendChild(card);
-                });
-            })
-            .catch(e => console.log("Error cargando:", e));
-        }
-
-        // 3. FUNCIONES DE CARRITO
-        function cambiarInput(id, delta) {
-            const input = document.getElementById('cant-'+id);
-            let val = parseFloat(input.value) + delta;
-            if(val < 0.1) val = 0.1;
-            input.value = Math.round(val * 100) / 100;
-        }
-        function fijarCantidad(id, val) { document.getElementById('cant-'+id).value = val; }
-
-        function agregar(id) {
-            const prod = productosGlobal.find(p => p.ID_Producto === id);
-            const cantidad = parseFloat(document.getElementById('cant-'+id).value);
-
-            // LÓGICA DE PRECIO Y OFERTA
-            let precioFinal = prod.Precio_Regular;
-            if (prod.Precio_Oferta && cantidad >= prod.Minimo_Oferta) {
-                precioFinal = prod.Precio_Oferta;
-                alert(`¡Oferta aplicada en ${prod.Nombre}!`);
-            }
-
-            // Agregar o actualizar carrito
-            const existente = carrito.find(item => item.id === id);
-            if (existente) {
-                existente.cantidad += cantidad;
-                // Verificar oferta nuevamente con la nueva cantidad total
-                if (prod.Precio_Oferta && existente.cantidad >= prod.Minimo_Oferta) {
-                    existente.precio = prod.Precio_Oferta;
+                } else {
+                    controlesHTML = `
+                        <button class="btn-accion" onclick="agregarAlCarrito('${prod.ID_Producto}', 1)">Agregar 1 un</button>
+                    `;
                 }
+
+                const tarjeta = document.createElement('div');
+                tarjeta.className = 'card';
+                tarjeta.innerHTML = `
+                    <h3>${prod.Nombre}</h3>
+                    <p>${prod.Descripcion || ''}</p>
+                    <p><strong>$${prod.Precio_Regular}</strong> / ${prod.Tipo_Venta}</p>
+                    ${prod.Minimo_Oferta ? `<p style="color:var(--color-primary); font-size:0.9em">Oferta llevando ${prod.Minimo_Oferta}${prod.Tipo_Venta}: $${prod.Precio_Oferta}</p>` : ''}
+                    <div style="margin-top:10px">
+                        ${controlesHTML}
+                    </div>
+                `;
+                contenedor.appendChild(tarjeta);
+            });
+
+            area.appendChild(contenedor);
+        }
+
+        // 4. FUNCIONALIDAD PROVISIONAL DEL CARRITO
+        function agregarAlCarrito(id, cantidad) {
+            alert(`Has agregado ${cantidad} del producto ID: ${id}`);
+        }
+
+        // 5. NAVEGACIÓN
+        function mostrarSeccion(seccion) {
+            document.getElementById('app').style.display = 'none';
+            document.getElementById('contenido-dinamico').style.display = 'block';
+            
+            if (seccion === 'ofertas' || seccion === 'pedidos') {
+                cargarInventario(); 
             } else {
-                carrito.push({
-                    id: id,
-                    nombre: prod.Nombre,
-                    precio: precioFinal,
-                    cantidad: cantidad,
-                    unidad: prod.Unidad
-                });
+                document.getElementById('render-area').innerHTML = `<h2>Sección: ${seccion.toUpperCase()}</h2><p>Próximamente...</p>`;
             }
-            alert(`Agregado: ${cantidad} ${prod.Unidad} de ${prod.Nombre}`);
-            console.log(carrito);
+        }
+
+        function volverAlInicio() {
+            document.getElementById('app').style.display = 'grid';
+            document.getElementById('contenido-dinamico').style.display = 'none';
         }
     </script>
 </body>
 </html>
-
