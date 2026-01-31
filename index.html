@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Vergel | Frutas y verduras</title>
+    <style>
+        /* --- CONFIGURACIÓN DE ESTILO (CSS) --- */
+        :root {
+            --primary: #FF8C00; /* Naranja Vergel */
+            --secondary: #4CAF50; /* Verde Fresco */
+            --dark: #333;
+            --light: #f4f4f4;
+            --white: #fff;
+            --shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--light);
+            color: var(--dark);
+        }
+
+        /* Cabecera y Navegación */
+        header {
+            background-color: var(--white);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary);
+            text-transform: uppercase;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        /* Botón Carrito */
+        .cart-btn {
+            background-color: var(--primary);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .cart-count {
+            background-color: red;
+            color: white;
+            border-radius: 50%;
+            padding: 2px 6px;
+            font-size: 0.8rem;
+            position: absolute;
+            top: -5px;
+            right: -5px;
+        }
+
+        /* Secciones Generales */
+        section {
+            padding: 40px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            text-align: center;
+            color: var(--secondary);
+            margin-bottom: 30px;
+            text-transform: uppercase;
+        }
+
+        /* Hero (Portada) */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1542838132-92c53300491e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 100px 20px;
+            border-radius: 0 0 20px 20px;
+        }
+
+        .hero h1 { font-size: 3rem; margin-bottom: 10px; }
+        .hero p { font-size: 1.2rem; }
+
+        /* Grilla de Productos */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card:hover { transform: translateY(-5px); }
+
+        .card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .card-body {
+            padding: 15px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card-title { font-weight: bold; font-size: 1.1rem; margin-bottom: 5px; }
+        .card-desc { font-size: 0.9rem; color: #666; margin-bottom: 10px; }
+        .price-tag { color: var(--secondary); font-weight: bold; font-size: 1.2rem; }
+        
+        .promo-badge {
+            background-color: var(--primary);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            display: inline-block;
+            margin-bottom: 5px;
+        }
+
+        .btn-add {
+            background-color: var(--secondary);
+            color: white;
+            border: none;
+            padding: 10px;
+            width: 100%;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            font-size: 1rem;
+        }
+
+        .btn-add:hover { background-color: #388E3C; }
+
+        /* Modal Carrito */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid #eee;
+            padding: 10px 0;
+        }
+
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; margin-bottom: 5px; }
+        .form-group input { width: 100%; padding: 8px; box-sizing: border-box; }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+        }
+
+        /* Tips y Ofertas */
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 */
+            height: 0;
+            overflow: hidden;
+            border-radius: 8px;
+            background: #000;
+        }
+        
+        .video-container iframe {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%; border: 0;
+        }
+
+        /* Botones de Formularios */
+        .forms-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn-form {
+            display: inline-block;
+            padding: 15px 30px;
+            background-color: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        /* Loader */
+        .loader { text-align: center; padding: 20px; font-style: italic; color: #666; }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <a href="#" class="logo">
+    <img src="logo.jpg" alt="Logo El Vergel" style="height: 50px;">
+</a>
+            <div class="nav-links">
+                <a href="#inicio">Inicio</a>
+                <a href="#ofertas">Ofertas</a>
+                <a href="#productos">Pedidos</a>
+                <a href="#tips">Tips</a>
+                <a href="#contacto">Contacto</a>
+            </div>
+            <div class="cart-btn" onclick="toggleCart()">
+                🛒 <span id="cart-count" class="cart-count">0</span>
+            </div>
+        </nav>
+    </header>
+
+    <div id="inicio" class="hero">
+        <h1>Bienvenido a El Vergel</h1>
+        <p>Frutas y verduras frescas seleccionadas para ti.</p>
+    </div>
+
+    <section id="ofertas">
+        <h2>🔥 Ofertas Imperdibles</h2>
+        <div id="ofertas-container" class="product-grid">
+            <div class="loader">Cargando ofertas...</div>
+        </div>
+    </section>
+
+    <section id="productos">
+        <h2>🥬 Haz tu Pedido</h2>
+        <div id="productos-container" class="product-grid">
+            <div class="loader">Cargando productos frescos...</div>
+        </div>
+    </section>
+
+    <section id="tips">
+        <h2>💡 Tips y Recetas</h2>
+        <div id="tips-container" class="content-grid">
+            <div class="loader">Cargando contenido...</div>
+        </div>
+    </section>
+
+    <section id="contacto">
+        <h2>📞 Satisfacción y Contacto</h2>
+        <p style="text-align: center; margin-bottom: 20px;">Tu opinión nos ayuda a crecer.</p>
+        
+        <div class="forms-container">
+            <a href="https://forms.gle/W2zYQqD5YWVgm8Jk9" class="btn-form" target="_blank">📋 Buzón de Sugerencias</a>
+            <a href="https://forms.gle/HSJmyiUeMz2ukNk69" class="btn-form" target="_blank">📢 Libro de Reclamos</a>
+        </div>
+
+        <div style="text-align: center; margin-top: 40px;">
+            <h3>¿Quiénes Somos?</h3>
+            <p>Somos una verdulería familiar comprometida con llevar lo mejor del campo a tu mesa.</p>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 El Vergel. Todos los derechos reservados.</p>
+    </footer>
+
+    <div id="cart-modal" class="modal">
+        <div class="modal-content">
+            <h3 style="color: var(--primary);">🛒 Tu Canasta</h3>
+            <div id="cart-items">
+                <p>Tu carrito está vacío.</p>
+            </div>
+            <div style="text-align: right; margin: 20px 0; font-weight: bold; font-size: 1.2rem;">
+                Total: $<span id="cart-total">0</span>
+            </div>
+            
+            <hr>
+            <h4>Finalizar Pedido</h4>
+            <div class="form-group">
+                <label>Nombre y Apellido:</label>
+                <input type="text" id="cliente-nombre" placeholder="Ej: Juan Perez">
+            </div>
+            <div class="form-group">
+                <label>WhatsApp (para enviarte el seguimiento):</label>
+                <input type="tel" id="cliente-whatsapp" placeholder="Ej: 11 1234 5678">
+            </div>
+
+            <button class="btn-add" onclick="enviarPedido()">✅ Confirmar Pedido</button>
+            <button onclick="toggleCart()" style="margin-top: 10px; background: transparent; border: none; color: #666; cursor: pointer; width: 100%;">Seguir comprando</button>
+        </div>
+    </div>
+
+    <script>
+        // --- TU LINK DE APPS SCRIPT ---
+        const API_URL = 'https://script.google.com/macros/s/AKfycbzjQzTtRMurYinS7Rya1xShPR0Gy9GNCTYUShl5gIrcF1huFIhzQS-uZ6V3Jm1MeGY/exec';
+        
+        let carrito = [];
+        let productosGlobal = [];
+
+        // 1. INICIAR LA PÁGINA
+        document.addEventListener('DOMContentLoaded', () => {
+            cargarProductos();
+            cargarContenido();
+        });
+
+        // 2. CARGAR PRODUCTOS DESDE APPSHEET
+        function cargarProductos() {
+            fetch(API_URL + '?action=getProductos')
+                .then(response => response.json())
+                .then(data => {
+                    productosGlobal = data;
+                    renderizarProductos(data);
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+        // 3. CARGAR TIPS Y OFERTAS
+        function cargarContenido() {
+            fetch(API_URL + '?action=getContenido')
+                .then(response => response.json())
+                .then(data => {
+                    renderizarContenido(data);
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+        // 4. MOSTRAR PRODUCTOS EN LA WEB
+        function renderizarProductos(productos) {
+            const container = document.getElementById('productos-container');
+            container.innerHTML = '';
+
+            productos.forEach(p => {
+                if(p.Disponible === false || p.Disponible === "FALSE") return; // Solo mostrar disponibles
+
+                // Lógica de precio oferta
+                let precioDisplay = `$${p.Precio_Regular}`;
+                if(p.Precio_Oferta && p.Cantidad_Oferta) {
+                    precioDisplay = `<div>$${p.Precio_Regular}</div>
+                                     <div style="font-size:0.8em; color:var(--primary)">Oferta x ${p.Cantidad_Oferta}${p.Tipo_Venta}: $${p.Precio_Oferta}</div>`;
+                }
+
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <img src="${p.Imagen_URL || 'https://via.placeholder.com/300'}" alt="${p.Nombre}" onerror="this.src='https://via.placeholder.com/300?text=Sin+Foto'">
+                    <div class="card-body">
+                        <div>
+                            <div class="card-title">${p.Nombre}</div>
+                            <div class="card-desc">${p.Descripcion || ''}</div>
+                            <div class="promo-badge">${p.Tipo_Venta}</div>
+                        </div>
+                        <div>
+                            <div class="price-tag">${precioDisplay}</div>
+                            <button class="btn-add" onclick="agregarAlCarrito('${p.ID_Producto}')">Agregar +</button>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // 5. MOSTRAR CONTENIDO (TIPS/OFERTAS)
+        function renderizarContenido(items) {
+            const ofertasContainer = document.getElementById('ofertas-container');
+            const tipsContainer = document.getElementById('tips-container');
+            ofertasContainer.innerHTML = '';
+            tipsContainer.innerHTML = '';
+
+            items.forEach(item => {
+                const elemento = document.createElement('div');
+                elemento.className = 'card';
+                
+                // Si es un video de YouTube, crear iframe
+                let mediaHTML = '';
+                if(item.Video_URL && item.Video_URL.includes('youtube')) {
+                    const videoId = item.Video_URL.split('v=')[1]?.split('&')[0];
+                    mediaHTML = `<div class="video-container"><iframe src="https://www.youtube.com/embed/${videoId}" allowfullscreen></iframe></div>`;
+                } else if (item.Imagen_URL) {
+                    mediaHTML = `<img src="${item.Imagen_URL}" style="height:200px; object-fit:cover;">`;
+                }
+
+                elemento.innerHTML = `
+                    ${mediaHTML}
+                    <div class="card-body">
+                        <div class="card-title">${item.Titulo}</div>
+                        <p>${item.Descripcion}</p>
+                    </div>
+                `;
+
+                if(item.Tipo === 'Oferta') {
+                    ofertasContainer.appendChild(elemento);
+                } else {
+                    tipsContainer.appendChild(elemento);
+                }
+            });
+
+            // Si no hay ofertas, mostrar mensaje
+            if(ofertasContainer.innerHTML === '') ofertasContainer.innerHTML = '<p>No hay ofertas especiales hoy.</p>';
+        }
+
+        // 6. FUNCIONES DEL CARRITO
+        function agregarAlCarrito(id) {
+            const producto = productosGlobal.find(p => p.ID_Producto == id);
+            const existente = carrito.find(item => item.id == id);
+
+            if(existente) {
+                existente.cantidad++;
+            } else {
+                carrito.push({
+                    id: id,
+                    nombre: producto.Nombre,
+                    precio: producto.Precio_Regular,
+                    cantidad: 1,
+                    unidad: producto.Tipo_Venta
+                });
+            }
+            actualizarCarritoUI();
+            // Efecto visual simple
+            alert(`¡${producto.Nombre} agregado!`);
+        }
+
+        function actualizarCarritoUI() {
+            document.getElementById('cart-count').innerText = carrito.reduce((acc, item) => acc + item.cantidad, 0);
+            
+            const itemsContainer = document.getElementById('cart-items');
+            itemsContainer.innerHTML = '';
+            let total = 0;
+
+            carrito.forEach((item, index) => {
+                const subtotal = item.precio * item.cantidad;
+                total += subtotal;
+                itemsContainer.innerHTML += `
+                    <div class="cart-item">
+                        <div>
+                            <strong>${item.nombre}</strong> (${item.unidad})<br>
+                            $${item.precio} x ${item.cantidad}
+                        </div>
+                        <div>
+                            $${subtotal} 
+                            <button onclick="eliminarDelCarrito(${index})" style="background:red; color:white; border:none; border-radius:50%; width:20px; height:20px;">x</button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            document.getElementById('cart-total').innerText = total;
+            if(carrito.length === 0) itemsContainer.innerHTML = '<p>Tu carrito está vacío.</p>';
+        }
+
+        function eliminarDelCarrito(index) {
+            carrito.splice(index, 1);
+            actualizarCarritoUI();
+        }
+
+        function toggleCart() {
+            const modal = document.getElementById('cart-modal');
+            modal.style.display = modal.style.display === 'flex' ? 'none' : 'flex';
+        }
+
+        // 7. ENVIAR PEDIDO A APPSHEET
+        function enviarPedido() {
+            const nombre = document.getElementById('cliente-nombre').value;
+            const whatsapp = document.getElementById('cliente-whatsapp').value;
+
+            if(carrito.length === 0) return alert('El carrito está vacío');
+            if(!nombre || !whatsapp) return alert('Por favor completa tu nombre y WhatsApp');
+
+            const btn = document.querySelector('.btn-add'); // Botón confirmar
+            const textoOriginal = btn.innerText;
+            btn.innerText = 'Enviando...';
+            btn.disabled = true;
+
+            const pedidoData = {
+                nombre: nombre,
+                whatsapp: whatsapp,
+                total: document.getElementById('cart-total').innerText,
+                carrito: carrito.map(item => ({
+                    nombre: item.nombre,
+                    cantidad: item.cantidad + ' ' + item.unidad,
+                    subtotal: item.precio * item.cantidad
+                }))
+            };
+
+            // Enviamos como texto plano para evitar problemas de seguridad (CORS) con Google
+            fetch(API_URL, {
+                method: 'POST',
+                body: JSON.stringify(pedidoData),
+                headers: { "Content-Type": "text/plain" }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if(data.status === 'success') {
+                    alert('¡Pedido Recibido! Tu código es: ' + data.idPedido);
+                    carrito = [];
+                    actualizarCarritoUI();
+                    toggleCart();
+                    // Limpiar formulario
+                    document.getElementById('cliente-nombre').value = '';
+                    document.getElementById('cliente-whatsapp').value = '';
+                } else {
+                    alert('Hubo un error al enviar el pedido.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Pedido enviado correctamente (puede que no recibas confirmación inmediata).');
+                // A veces Google da error de red aunque funcione, por seguridad
+                carrito = [];
+                actualizarCarritoUI();
+                toggleCart();
+            })
+            .finally(() => {
+                btn.innerText = textoOriginal;
+                btn.disabled = false;
+            });
+        }
+    </script>
+</body>
+</html>
